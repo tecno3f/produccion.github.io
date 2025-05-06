@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autodiagnóstico de Productividad</title>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #007BFF, #FFA500, #ffffff);
+      background-size: 200% 200%;
+      animation: gradient 10s ease infinite;
+      color: #333;
+    }
+
+    @keyframes gradient {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .container {
+      max-width: 300px;
+      margin: auto;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+      margin-top: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin: 1rem 0 0.5rem;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .resultado {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background-color: #f0f0f0;
+      border-left: 5px solid #007BFF;
+      border-radius: 0.5rem;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Autodiagnóstico de Productividad</h1>
+    <form id="formulario">
+      <label style="color: grey">1. Capital Humano</label>
+      <label>¿El personal está capacitado, comprometido y motivado para mejorar continuamente su trabajo?</label>
+      <select name="q1">
+        <option value="" disabled selected>Seleccione el nivel de madurez</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <label style="color: grey">2. Organización y Procesos</label>
+      <label>¿Los procesos están estandarizados, optimizados y bien coordinados?</label>
+      <select name="q2">
+        <option value="" disabled selected>Seleccione el nivel de madurez</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <label style="color: grey">3. Liderazgo y Gestión</label>
+      <label>¿La conducción de la empresa promueve claridad estratégica, innovación y autonomía?</label>
+      <select name="q3">
+        <option value="" disabled selected>Seleccione el nivel de madurez</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <label style="color: grey">4. Innovación Interna</label>
+      <label>¿La empresa implementa mejoras propias en productos, servicios o procesos cada año?</label>
+      <select name="q4">
+        <option value="" disabled selected>Seleccione el nivel de madurez</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <label style="color: grey">5. Digitalización y Tecnología</label>
+      <label>¿Se utilizan herramientas digitales o tecnológicas que aumenten la eficiencia?</label>
+      <select name="q5">
+        <option value="" disabled selected>Seleccione el nivel de madurez</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <label style="color: grey">6. Gestión Financiera</label>
+      <label>¿Se cuenta con control presupuestario, seguimiento de costos y gestión financiera profesionalizada?</label>
+      <select name="q6">
+        <option value="" disabled selected>Seleccione el nivel de madurez</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <label style="color: grey">7. Clima y Relaciones</label>
+      <label>¿El equipo trabaja en un ambiente de confianza, con buena comunicación y sin conflictos recurrentes?</label>
+      <select name="q7">
+        <option value="" disabled selected>Seleccione el nivel de madurez</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <button type="button" onclick="calcularResultado()">Ver diagnóstico</button>
+    </form>
+
+    <div class="resultado" id="resultado"></div>
+  </div>
+
+  <script>
+    function calcularResultado() {
+      const form = document.getElementById('formulario');
+      let total = 0;
+      for (let i = 1; i <= 7; i++) {
+        total += parseInt(form['q' + i].value);
+      }
+
+      let mensaje = '';
+      if (total <= 15) {
+        mensaje = 'Riesgo alto. Productividad interna muy baja. Necesita intervención urgente.';
+      } else if (total <= 24) {
+        mensaje = 'Nivel básico. Algunas capacidades están presentes, pero hay muchas oportunidades de mejora.';
+      } else if (total <= 30) {
+        mensaje = 'Buen nivel. La empresa tiene bases sólidas, se recomienda profundizar.';
+      } else {
+        mensaje = 'Excelente. Cultura productiva instalada. Puede actuar como empresa líder o mentora.';
+      }
+
+      document.getElementById('resultado').innerHTML = '<strong>Puntaje total:</strong> ' + total + '<br><br><strong>Diagnóstico:</strong> ' + mensaje;
+    }
+  </script>
+</body>
+</html>
